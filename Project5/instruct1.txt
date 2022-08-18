@@ -1,0 +1,67 @@
+; BASIC OPERATIONS TEST
+
+mov reg 1 1 end 
+mov reg 2 12 end
+add reg 1 reg 2 end
+sub reg 1 10 end 
+
+
+
+; PRINT TEST
+
+print The _ value _ stored _ in _ Register _ 1 _ is _ /reg 1 newline
+Wayne _ Newton _ eats _ zucchinis _ newline
+endprint
+
+
+
+; MODULUS TEST
+mov reg 3 reg 2 end
+mod reg 3 5 end
+print Modulus: _ /reg 3 newline endprint
+
+
+
+; FUNCTIONS TEST
+
+func foo
+mul reg 1 reg 2 end
+endfunc
+
+func bar
+call foo
+div reg 1 6 end
+print Wayne _ Newton _ is _ Superman newline endprint
+endfunc
+
+call bar
+call bar
+
+
+
+; WHILE LOOPS AND IF STATEMENTS TEST
+
+; function to use in while loop
+func repeat 
+print loop _ executing: _ trial _ /reg 2 _ newline endprint
+endfunc
+
+mov reg 2 0 end ; index for while loop
+mov reg 7 10 end
+
+while reg 2 < reg 7
+add reg 2 1 end ; increment index
+call repeat
+endwhile
+
+if reg 2 < 10
+print Testing _ if _ statement. newline endprint
+endif
+
+mov reg 1 13
+
+; RETURN TEST
+
+; Expect a return value of 12
+
+; return reg 1

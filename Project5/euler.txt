@@ -1,0 +1,133 @@
+; Uses Euler method to calculate the trajectory of a damped projectile
+
+
+; acceleration function
+
+func deriv 	; given Vx, Vy, B, set a_x, a_y
+
+mov regd 23 regd 3 	; Vx
+mov regd 24 regd 4	; Vy
+
+mul regd 23 regd 30 	; B*Vx
+mul regd 24 regd 30 	; B*Vy
+
+mov regd 5 0 end 	; a_x = 0
+sub regd 5 regd 23	; a_x = -B*Vx
+
+mov regd 6 -9.8 end 	; a_y = -g
+sub regd 6 regd 24	; a_y = -g - B*Vy
+
+endfunc
+
+
+
+; initial conditions
+
+mov regd 11 4 end 		; t_f
+mov regd 10 .01 end 		; dt
+
+mov regd 9 regd 11 end
+div regd 9 regd 10 end ; size
+
+
+new arrd T regd 9 end ; time
+new arrd X regd 9 end ; x 
+new arrd Y regd 9 end ; y
+new arrd Vx regd 9 end ; v_x
+new arrd Vy regd 9 end ; v_y
+
+
+mov arrd X 0 0 end 		; x_0
+mov arrd Y 0 10 end 		; y_0
+mov arrd Vx 0 10 end 		; Vx_0
+mov arrd Vy 0 10 end 		; Vy_0
+
+mov regd 30 .3 			; damping constant
+
+print Initial _ conditions: newline
+X_0 _ = _ /arrd X 0 _ m newline
+Y_0 _ = _ /arrd Y 0 _ m newline
+V_xo _ = _ /arrd Vx 0 _ m/s newline
+V_yo _ = _ /arrd Vy 0 _ m/s newline 
+B _ = _ /regd 30 _ /s newline 
+dt _ = _ /regd 10 _ s newline
+t_max _ = _ /regd 11 _ s newline
+newline endprint
+
+
+
+
+; iterate
+
+mov reg 20 0 end ; hit ground bool
+mov reg 12 1 ; while loop counter
+mov reg 13 0 ; counter - 1
+
+
+while reg 12 < regd 9 	; loop
+
+mov regd 3 arrd Vx reg 13 	; Vx_o
+mov regd 4 arrd Vy reg 13 	; Vy_o
+
+call deriv 	; regd 5 == a_x, regd 6 == a_y
+
+mul regd 5 regd 10 		; dt*a_x
+mul regd 6 regd 10 		; dt*a_y
+
+
+add regd 3 regd 5 	
+mov arrd Vx reg 12 regd 3	; v_x_1 = v_x_0 + dt*a_x
+
+
+add regd 4 regd 6 	
+mov arrd Vy reg 12 regd 4	; v_y_1 = v_y_1 + dt*a_y
+
+
+
+mov regd 3 regd 10 
+mul regd 3 arrd Vx reg 12 	; dt*Vx
+
+mov regd 4 regd 10 
+mul regd 4 arrd Vy reg 12 	; dt*Vy
+
+
+
+mov regd 1 arrd X reg 13 end
+add regd 1 regd 3 end 
+mov arrd X reg 12 regd 1 	; x_1 = x_0 + dt*Vx
+
+mov regd 2 arrd Y reg 13 end
+add regd 2 regd 4 end 
+mov arrd Y reg 12 regd 2 	; y_1 = y_0 + dt*Vy
+
+mov regd 7 arrd T reg 13 end
+add regd 7 regd 10 end
+mov arrd T reg 12 regd 7 end 	; t_1 = t_0 + dt
+
+
+; print X( /reg 12 ) _ = _ /arrd X reg 12 newline endprint 	; uncomment to display array
+; print Y( /reg 12 ) _ = _ /arrd Y reg 12 newline endprint
+
+
+if reg 20 == 0 			; find when projectile hits the ground
+if arrd Y reg 12 < 0
+mov reg 8 reg 12
+mov reg 20 1 end
+endif
+endif
+
+add reg 12 1 ;
+add reg 13 1 ;
+endwhile
+
+print
+Results: newline
+y_f _ = _ /arrd Y reg 8 _ meters newline
+Range _ = _ /arrd X reg 8 _ meters newline
+Flight _ time _ = _ /arrd T reg 8 _ seconds newline newline 
+endprint
+
+
+
+return
+  

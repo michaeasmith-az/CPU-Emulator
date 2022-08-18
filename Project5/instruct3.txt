@@ -1,0 +1,23 @@
+; PERFORMANCE TESTING
+; uncomment instruction to test timing
+
+; mov reg 0 1
+
+; add reg 0 1
+
+; mod reg 0 2
+
+; func blank endfunc call blank
+
+; new arr myArray 10
+
+; mov arr myArray 1 2
+
+; print timing... newline endprint
+; print timing... twice... newline endprint
+
+; if 0 == 0 endif
+
+; return reg 0
+
+return

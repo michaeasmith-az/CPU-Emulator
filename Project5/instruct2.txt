@@ -1,0 +1,105 @@
+; ERROR TEST (uncomment one to test - will terminate program)
+
+; call falseFunc 	; call nonexistent function
+
+; func bad func badbad endfunc endfunc 		; function declaration within function declaration
+
+; sloppy Wayne Newton 		; invalid instruction
+
+; add 3 4 end 		; first parameter not register or array
+
+; mod regd 2 2 		; double used in modulus operation
+
+; mov arr myArray 300 2 	; array index out of range
+
+; mov reg 2 0 end func recursion add reg 2 1 end print /reg 2 newline endprint call recursion endfunc call recursion end ; infinite recursion
+
+
+
+; DOUBLE REGISTER AND INPUT TEST
+
+print Enter _ a _ double _ to _ be _ manipulated: _ endprint ; ask for input
+
+; mov regd 4 3.14 end 		
+mov regd 4 input end 		; uncomment to take user input 
+add regd 4 2.3 end
+sub regd 4 1.4 end
+mul regd 4 5 end
+div regd 4 3.3 end
+print The _ result _ of _ the _ manipulation _ is: _  /regd 4 newline endprint
+
+mov regd 3 0 ; counter for while loop
+
+print Testing _ while _ loop _ with _ doubles: newline endprint
+while regd 3 < 0.4
+print regd _ = _ /regd 3 newline endprint
+add regd 3 0.1 end
+endwhile
+
+
+
+; #INCLUDE TEST
+
+#include instruct1.txt
+
+call bar ; function from file instruct1.txt
+
+
+; ARRAY TEST
+
+mov reg 1 20 ; size of array
+
+new arr myArray reg 1 ; allocate array
+
+mov arr myArray 11 10 ; limit for while loop
+mov reg 2 0 ; counter for while loop
+
+
+while reg 2 < arr myArray 11
+mov arr myArray reg 2 reg 2
+sub arr myArray reg 2 1
+mul arr myArray reg 2 5
+add arr myArray reg 2 reg 2
+add reg 2 1 end ; increment counter
+endwhile
+
+print Testing _ while _ loop _ using _ only _ array _ items: newline endprint
+mov arr myArray 12 6 
+while arr myArray 12 < arr myArray 11 ; while loop using array items
+print GREAT _ SUCCESS newline endprint
+add arr myArray 12 1 end
+endwhile
+
+
+; print some array items
+mov reg 2 0 ; counter for while loop
+while reg 2 < 10
+print myArray[ /reg 2 ] _ = _ /arr myArray reg 2 newline endprint
+add reg 2 1 end
+endwhile
+
+; create double array
+new arrd doubleArray 10
+
+mov reg 2 0 end
+
+while reg 2 < 10
+add regd 4 .1
+mov arrd doubleArray reg 2 regd 4
+add arrd doubleArray reg 2 2.24
+sub arrd doubleArray reg 2 98.3
+mul arrd doubleArray reg 2 3
+div arrd doubleArray reg 2 7
+; print doubleArray[ /reg 2 ] _ = _ /arrd doubleArray reg 2 newline endprint
+add reg 2 1 end
+endwhile
+
+mov reg 2 0 end
+
+while reg 2 < 10
+print doubleArray[ /reg 2 ] _ = _ /arrd doubleArray reg 2 newline endprint
+add reg 2 1 end
+endwhile
+
+
+return arrd doubleArray 1 ; return value in double array element 1
